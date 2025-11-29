@@ -12,6 +12,13 @@
 			</a>
 		</div>
 
+		<!-- Mensagem de sucesso -->
+		@if(session('success'))
+			<div class="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded">
+				{{ session('success') }}
+			</div>
+		@endif
+
 		<!-- Formulário de criação -->
 		@if ($errors->any())
 			<div class="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded">

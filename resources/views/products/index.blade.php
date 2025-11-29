@@ -16,6 +16,14 @@
         </div>
     </header>
 
+    @if(session('success'))
+        <div class="mb-4 max-w-6xl mx-auto px-4">
+            <div class="p-4 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800">
+                {{ session('success') }}
+            </div>
+        </div>
+    @endif
+
     <div class="bg-white shadow-sm rounded-lg overflow-hidden">
         <div class="p-4 border-b">
             <h2 class="text-lg font-medium text-gray-700">Tabela de Produtos</h2>
