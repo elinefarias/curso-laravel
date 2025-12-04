@@ -27,18 +27,42 @@ class ProductsController extends Controller
        return view('products.create');
     }
 
-     /* public function store(ProductsRequest $request)
+    public function store(ProductsRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'quantity' => 'required|integer|min:0',
-            'description' => 'nullable|string',
-        ]);
+        $data = $request->validated();
 
-        Product::create($data);
+        try {
+            $product = $this->productsService->create($data);
 
-        // Permanecer na página de criação e mostrar mensagem de sucesso
-        return redirect()->route('productsCreate')->with('success', 'Produto criado com sucesso.');
-    } */
+            return redirect()->route('productsCreate')->with('success', "Produto \"{$product->name}\" criado com sucesso.");
+        } catch (\Throwable $th) {
+            logger()->error('Erro ao criar produto: ' . $th->getMessage(), ['exception' => $th]);
+
+            return back()->withErrors('Erro ao criar produto.')->withInput();
+        }
+    }
+
+    public function update(ProductsRequest $request, Product $product): RedirectResponse
+    {
+        $data = $request->validated();
+
+        try {
+            $updated = $this->productsService->update($data, $product->id);
+
+            return redirect()->route('productsEdit', $updated->id)->with('success', "Produto \"{$updated->name}\" atualizado com sucesso.");
+        } catch (\Throwable $th) {
+            logger()->error('Erro ao atualizar produto: ' . $th->getMessage(), ['exception' => $th]);
+
+            return back()->withErrors('Erro ao atualizar produto.')->withInput();
+        }
+    }
+
+     public function edit(int $id): View {
+        $product = $this->productsService->findById($id);
+        return view('products.edit',compact('product'));
+    }
+
+    public function update(ProductsRequest $request, int $id): RedirectResponse{
+        
+    }
 }
