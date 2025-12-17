@@ -48,7 +48,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ {{ number_format($product->price, 2, ',', '.') }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $product->quantity}}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                <a href="{{ route('productsEdit', $product->id) }}" class="inline-flex items-center px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700">Editar</a>
+                                <a href="{{ route('productsEdit', array('id' => $product->id)) }}" class="inline-flex items-center px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700">Editar</a>
                             </td>
                         </tr>
                     @endforeach

@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use App\Http\Services\ProductsService;
 use App\Http\Requests\ProductsRequest;
+use App\Models\Product;
 class ProductsController extends Controller
 {
     private $productsService;
@@ -42,12 +43,12 @@ class ProductsController extends Controller
         }
     }
 
-    public function update(ProductsRequest $request, Product $product): RedirectResponse
+    public function update(ProductsRequest $request, int $id): RedirectResponse
     {
         $data = $request->validated();
 
         try {
-            $updated = $this->productsService->update($data, $product->id);
+            $updated = $this->productsService->update($data, $id);
 
             return redirect()->route('productsEdit', $updated->id)->with('success', "Produto \"{$updated->name}\" atualizado com sucesso.");
         } catch (\Throwable $th) {
@@ -62,7 +63,5 @@ class ProductsController extends Controller
         return view('products.edit',compact('product'));
     }
 
-    public function update(ProductsRequest $request, int $id): RedirectResponse{
-        
-    }
+    
 }

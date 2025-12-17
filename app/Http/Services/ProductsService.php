@@ -50,19 +50,4 @@ class ProductsService
         }
     }
 
-    public function update(array $data, int $id): array {
-        try {
-            DB::beginTransaction();
-            $product = $this->findById($id);
-            $product->update($data);
-            DB::commit();
-
-            return $product->toArray();
-        }
-        catch (Throwable $th){
-            DB::rollBack();
-            throw $th;
-        }
-    }
-
 }
